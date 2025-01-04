@@ -1,37 +1,28 @@
-import time
 from git import Repo
 
-REPO_PATH = "darshaan-karth/MIT_BWSI_PROJECT"     #Your github repo path: ex. /home/pi/FlatSatChallenge
-FOLDER_PATH = "/Images"   #Your image folder path in your GitHub repo: ex. /Images
+INFO_msg = "\033[92m[INFO]\033[0m "
+ERROR_msg = "\033[91m[ERROR]\033[0m "
+
+REPO_PATH = "~/MIT_BWSI_PROJECT"     #Your github repo path: ex. /home/pi/FlatSatChallenge
+FOLDER_PATH = "Images/"   #Your image folder path in your GitHub repo: ex. /Images
 
 def git_push():
     """
     This function is complete. Stages, commits, and pushes new images to your GitHub repo.
     """
     try:
+        ADD_PATH = FOLDER_PATH + "test.jpg"
+        
         repo = Repo(REPO_PATH)
         origin = repo.remote('origin')
-        print('added remote')
+        print(INFO_msg + 'Added repo remote')
         origin.pull()
-        print('pulled changes')
-        repo.git.add(REPO_PATH + FOLDER_PATH)
-        repo.index.commit('New Photo')
-        print('made the commit')
+        print(INFO_msg + 'Pulled changes to the repo')
+        repo.index.add(ADD_PATH)
+        repo.index.commit('Test Photo Upload Function')
         origin.push()
-        print('pushed changes')
+        print(INFO_msg + 'Commited and Pushed Images')
     except:
-        print('Couldn\'t upload to git')
+        print(ERROR_msg + 'Problem with uploading the file to git')
 
-
-def img_gen(name):
-    """
-    This function is complete. Generates a new image name.
-
-    Parameters:
-        name (str): your name ex. MasonM
-    """
-    t = time.strftime("_%H%M%S")
-    imgname = (f'{REPO_PATH}{FOLDER_PATH}/{name}{t}.jpg')
-    return imgname
-
-
+git_push()
