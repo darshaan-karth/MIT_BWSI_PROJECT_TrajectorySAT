@@ -11,7 +11,7 @@ def main():
     while True:
         accelx, accely, accelz = accel_gyro.acceleration
         print("| accelx : {} || accely : {} || accelz : {} |".format(round(accelx,3), round(accely,3), round(accelz,3)))
-        time.sleep(0.5)
+        time.sleep(0.1)
 
 if __name__ == '__main__':
     main()
