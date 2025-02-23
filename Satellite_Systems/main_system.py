@@ -1,14 +1,22 @@
-from power_temp_system import main as power_temp_system
-from adcs_system import main as adcs_system
-from camera_system import main as camera_system
+from communication_system import uplink_data as uplink
+import modes
+import sys
 
-voltage, temperature = power_temp_system()
-acceleration, gyro, magnetic = adcs_system()
+def main():
+    while True:
+        mode, duration = uplink()
 
-camera_system()
+        if mode == "DEORBIT":
+            sys.exit(0)
 
-print("Voltage: {}V".format(voltage))
-print("Temperature: {}'C".format(temperature))
-print("Acceleration: {} (m/s^2)".format(acceleration))
-print("Gyro: {} (rad/s)".format(gyro))
-print("Magnetic: {} (gauss)".format(magnetic))
+        elif mode == "SLEEP":
+            modes.sleep_mode(duration)
+
+        elif mode == "SCIENCE":
+            modes.science_mode(duration)
+
+        elif mode == "COMMS":
+            modes.downlink_mode()
+
+if __name__ == "__main__":
+    main()
